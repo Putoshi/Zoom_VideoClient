@@ -1,0 +1,60 @@
+.nav {
+  height: 10vh;
+}
+.navhome {
+  margin-top: 4vh;
+  margin-left: 5vh;
+  display: flex;
+  position: absolute;
+  top: 0;
+  height: auto;
+}
+
+.navhome span {
+  color: #747487;
+  display: inline-block;
+  padding-left: 1rem;
+  // font-size: 20px;
+  // font-weight: 400;
+  margin-left: 1rem;
+  border-left-width: 1px;
+  border-color: #747487;
+}
+
+
+.navdoc {
+  margin-top: 4vh;
+  display: inline-flex;
+  height: auto;
+}
+
+
+.navdoc span {
+  margin: 0 10px 0 0;
+  // color: #747487;
+  padding-left: 1rem;
+  // font-size: 20px;
+  // font-weight: 400;
+  border-left-width: 1px;
+  border-color: #747487;
+}
+
+
+.home {
+  padding-top: 10vh;
+  h1{
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+  .feature-entry {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .entry-item{
+      margin: 0 20px 50px 0;
+      .ant-card-cover {
+        padding-top:20px
+      }
+    }
+  }
+}
