@@ -43,6 +43,11 @@ const mediaShape = {
     decode: false,
   },
 };
+
+const userType = {
+  type: "controller"
+};
+
 const mediaReducer = produce((draft, action) => {
   switch (action.type) {
     case 'audio-encode': {
@@ -92,8 +97,10 @@ function App(props: AppProps) {
         setLoadingText('Joining the session...');
         await zmClient.join(topic, signature, name, password);
         setMediaStream(zmClient.getMediaStream());
+
         const chatClient = zmClient.getChatClient();
         setChatClient(chatClient);
+
         setIsLoading(false);
       } catch (e) {
         setIsLoading(false);

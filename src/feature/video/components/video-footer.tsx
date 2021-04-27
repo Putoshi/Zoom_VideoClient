@@ -5,6 +5,7 @@ import React, {
   useEffect,
   MutableRefObject,
 } from 'react';
+import Select from 'react-select';
 import classNames from 'classnames';
 import { message } from 'antd';
 import ZoomContext from '../../../context/zoom-context';
@@ -19,8 +20,18 @@ interface VideoFooterProps {
   shareRef?: MutableRefObject<HTMLCanvasElement | null>;
   sharing?: boolean;
 }
+
+
+
 const VideoFooter = (props: VideoFooterProps) => {
   const { className, shareRef, sharing } = props;
+
+  const device:any = {
+    speaker: null,
+    mic: null,
+    camera: null,
+  };
+
   const [isStartedAudio, setIsStartedAudio] = useState(false);
   const [isStartedVideo, setIsStartedVideo] = useState(false);
   const [isStartedScreenShare, setIsStartedScreenShare] = useState(false);
@@ -28,15 +39,19 @@ const VideoFooter = (props: VideoFooterProps) => {
   const { mediaStream } = useContext(ZoomMediaContext);
   const zmClient = useContext(ZoomContext);
   const onCameraClick = useCallback(async () => {
+    console.log(device.camera);
     if (isStartedVideo) {
       await mediaStream?.stopVideo();
       setIsStartedVideo(false);
     } else {
+      if(device.camera) await mediaStream?.switchCamera(device.camera.deviceId);
       await mediaStream?.startVideo();
       setIsStartedVideo(true);
     }
-  }, [mediaStream, isStartedVideo]);
+  }, [mediaStream, isStartedVideo, device]);
+
   const onMicrophoneClick = useCallback(async () => {
+
     if (isStartedAudio) {
       if (isMuted) {
         await mediaStream?.unmuteAudio();
@@ -46,10 +61,13 @@ const VideoFooter = (props: VideoFooterProps) => {
         setIsMuted(true);
       }
     } else {
+      if(device.mic) await mediaStream?.switchMicrophone(device.mic.deviceId);
+      if(device.speaker) await mediaStream?.switchSpeaker(device.speaker.deviceId);
       await mediaStream?.startAudio();
       setIsStartedAudio(true);
     }
-  }, [mediaStream, isStartedAudio, isMuted]);
+  }, [mediaStream, isStartedAudio, isMuted, device]);
+
   const onHostAudioMuted = useCallback((payload) => {
     const { action, source, type } = payload;
     if (action === 'join' && type === 'computer') {
@@ -81,6 +99,8 @@ const VideoFooter = (props: VideoFooterProps) => {
     console.log('passively stop reason:', reason);
     setIsStartedScreenShare(false);
   }, []);
+
+
   useEffect(() => {
     zmClient.on('current-audio-change', onHostAudioMuted);
     zmClient.on('passively-stop-share', onPassivelyStopShare);
@@ -89,6 +109,8 @@ const VideoFooter = (props: VideoFooterProps) => {
       zmClient.off('passively-stop-share', onPassivelyStopShare);
     };
   }, [zmClient, onHostAudioMuted, onPassivelyStopShare]);
+
+
   useUnmount(() => {
     if (isStartedAudio) {
       mediaStream?.stopAudio();
@@ -100,8 +122,62 @@ const VideoFooter = (props: VideoFooterProps) => {
       mediaStream?.stopShareScreen();
     }
   });
+
+  // console.log(mediaStream?.getCameraList());
+  const cameraDeviceOptions = mediaStream?.getCameraList().map(e => {
+    return {
+      deviceId:e.deviceId,
+      label:e.label,
+      value:e.deviceId
+    };
+  });
+
+  // console.log(mediaStream?.getMicList());
+  const micDeviceOptions = mediaStream?.getMicList().map(e => {
+    return {
+      deviceId:e.deviceId,
+      label:e.label,
+      value:e.deviceId
+    };
+  });
+
+  // console.log(mediaStream?.getSpeakerList());
+  const speakerDeviceOptions = mediaStream?.getSpeakerList().map(e => {
+    return {
+      deviceId:e.deviceId,
+      label:e.label,
+      value:e.deviceId
+    };
+  });
+
+
+  const onSpeakerChange = (inputValue: any): void => {
+    // console.log(inputValue);
+    device.speaker = inputValue;
+  }
+
+  const onMicChange = (inputValue: any): void => {
+    // console.log(inputValue);
+    device.mic = inputValue;
+  }
+
+  const onCameraChange = (inputValue: any): void => {
+    // console.log(inputValue);
+    device.camera = inputValue;
+  }
+
+
   return (
+
+
     <div className={classNames('video-footer', className)}>
+
+      <div className="select_device_list">
+        <Select placeholder="Speaker" className="select_device select_speaker_device" options={speakerDeviceOptions} onChange={onSpeakerChange}/>
+        <Select placeholder="Mic" className="select_device select_mic_device" options={micDeviceOptions}  onChange={onMicChange}/>
+        <Select placeholder="Camera" className="select_device select_camera_device" options={cameraDeviceOptions}  onChange={onCameraChange}/>
+      </div>
+
       <MicrophoneButton
         isStartedAudio={isStartedAudio}
         isMuted={isMuted}

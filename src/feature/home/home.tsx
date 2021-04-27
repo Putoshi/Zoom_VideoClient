@@ -19,48 +19,48 @@ const Home: React.FunctionComponent<RouteComponentProps> = (props) => {
       description:
         'Gallery Layout, Start/Stop Audio, Mute/Unmute, Start/Stop Video, Start/Stop Screen Share',
     },
-    {
-      key: 'chat',
-      icon: 'icon-chat',
-      title: 'Session chat',
-      description: 'Session Chat, Chat Priviledge',
-    },
+    // {
+    //   key: 'chat',
+    //   icon: 'icon-chat',
+    //   title: 'Session chat',
+    //   description: 'Session Chat, Chat Priviledge',
+    // },
   ];
   return (
     <div>
-      <div className="flex fixed nav">
-        <a href="/" className="h-full flex items-center router-active navhome">
-          <img src="./logo.svg" alt="Home" className="h-20px" />
-          <span className="text-second pl-4 ml-4 border-l border-line weak-hidden sm:inline-block">
-            VideoSDK
-          </span>
-        </a>
+      {/*<div className="flex fixed nav">*/}
+      {/*  <a href="/" className="h-full flex items-center router-active navhome">*/}
+      {/*    <img src="./logo.svg" alt="Home" className="h-20px" />*/}
+      {/*    <span className="text-second pl-4 ml-4 border-l border-line weak-hidden sm:inline-block">*/}
+      {/*      VideoSDK*/}
+      {/*    </span>*/}
+      {/*  </a>*/}
 
-        <a
-          href="https://marketplace.zoom.us/docs/sdk/video/web/reference"
-          className="h-full flex items-center router-active navdoc"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="text-second pl-4 ml-4 border-l border-line weak-hidden sm:inline-block">
-            API Reference
-          </span>
-        </a>
+      {/*  <a*/}
+      {/*    href="https://marketplace.zoom.us/docs/sdk/video/web/reference"*/}
+      {/*    className="h-full flex items-center router-active navdoc"*/}
+      {/*    target="_blank"*/}
+      {/*    rel="noreferrer"*/}
+      {/*  >*/}
+      {/*    <span className="text-second pl-4 ml-4 border-l border-line weak-hidden sm:inline-block">*/}
+      {/*      API Reference*/}
+      {/*    </span>*/}
+      {/*  </a>*/}
 
-        <a
-          href="https://marketplace.zoom.us/docs/sdk/video/web/essential"
-          className="h-full flex items-center router-active navdoc"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="text-second pl-4 ml-4 border-l border-line weak-hidden sm:inline-block">
-            Doc
-          </span>
-        </a>
-      </div>
+      {/*  <a*/}
+      {/*    href="https://marketplace.zoom.us/docs/sdk/video/web/essential"*/}
+      {/*    className="h-full flex items-center router-active navdoc"*/}
+      {/*    target="_blank"*/}
+      {/*    rel="noreferrer"*/}
+      {/*  >*/}
+      {/*    <span className="text-second pl-4 ml-4 border-l border-line weak-hidden sm:inline-block">*/}
+      {/*      Doc*/}
+      {/*    </span>*/}
+      {/*  </a>*/}
+      {/*</div>*/}
 
       <div className="home">
-        <h1>Zoom Video SDK feature</h1>
+        <h1>LIBIDO VIDEO</h1>
         <div className="feature-entry">
           {featureList.map((feature) => {
             const { key, icon, title, description } = feature;

@@ -41,7 +41,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ZoomContext.Provider value={zmClient}>
       <App meetingArgs={meetingArgs as any} />
-      <button onClick={leaveSession}></button>
+      <button onClick={leaveSession}>Leave</button>
     </ZoomContext.Provider>
   </React.StrictMode>,
   document.getElementById('root'),
